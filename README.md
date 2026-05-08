@@ -40,6 +40,23 @@ python3 session_surgery.py --collect-all-pins
 - `AGENT_ROOT` — agent home directory (default: current directory)
 - `CLAUDE_SESSION_DIR` — session files location (default: `~/.claude/projects`)
 
+### fix_token_counts.py
+
+Recalculates token counts after manual session modifications. CC uses cumulative token counts for cache management — when you edit a session file manually, these counts become invalid.
+
+```bash
+# Check what would change (dry run)
+python3 fix_token_counts.py /path/to/session.jsonl --dry-run
+
+# Apply fixes
+python3 fix_token_counts.py /path/to/session.jsonl
+
+# Auto-detect current session
+python3 fix_token_counts.py
+```
+
+**Logic:** `next_cache_read = prev_cache_read + prev_cache_creation + input_tokens`
+
 ## Installation
 
 Clone to `.system`:
